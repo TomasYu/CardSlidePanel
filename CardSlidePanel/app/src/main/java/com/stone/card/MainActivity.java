@@ -21,15 +21,39 @@ public class MainActivity extends FragmentActivity {
 
     private CardSlidePanel.CardSwitchListener cardSwitchListener;
 
-    private String imagePaths[] = {"file:///android_asset/wall01.jpg",
-            "file:///android_asset/wall02.jpg", "file:///android_asset/wall03.jpg",
+//    private String imagePaths[] = {"file:///android_asset/wall01.jpg",
+//            "file:///android_asset/wall02.jpg", "file:///android_asset/wall03.jpg",
+//            "file:///android_asset/wall04.jpg", "file:///android_asset/wall05.jpg",
+//            "file:///android_asset/wall06.jpg", "file:///android_asset/wall07.jpg",
+//            "file:///android_asset/wall08.jpg", "file:///android_asset/wall09.jpg",
+//            "file:///android_asset/wall10.jpg", "file:///android_asset/wall11.jpg",
+//            "file:///android_asset/wall12.jpg"}; // 12个图片资源
+
+    private String imagePaths[] = {
+            "https://wxt.sinaimg.cn/thumb300/006m4Rxoly1fn0gk1x4c7j33342bcqrn.jpg?tags=%5B%5D",
+            "https://wxt.sinaimg.cn/thumb300/006m4Rxoly1fmxyxnwr68j30s41e07sx.jpg?tags=%5B%5D",
+            "https://wxt.sinaimg.cn/thumb300/006m4Rxoly1fknhg0f8acj30b407jgop.jpg?tags=%5B%5D",
+            "https://wxt.sinaimg.cn/thumb300/006m4Rxoly1fjk76j3m0oj30u01hckjl.jpg?tags=%5B%5D",
+            "https://wxt.sinaimg.cn/thumb300/006m4Rxoly1fjdmmmlrstj31be0qoe7k.jpg?tags=%5B%5D",
+            "https://wxt.sinaimg.cn/thumb300/006m4Rxoly1fj11rgmpxpj30kn0kn3zr.jpg?tags=%5B%5D",
+            "https://wx3.sinaimg.cn/mw1024/8073398dly1fujqneoe69j20cw069mxt.jpg",
+            "file:///android_asset/wall01.jpg", "file:///android_asset/wall02.jpg", "file:///android_asset/wall03.jpg",
             "file:///android_asset/wall04.jpg", "file:///android_asset/wall05.jpg",
             "file:///android_asset/wall06.jpg", "file:///android_asset/wall07.jpg",
             "file:///android_asset/wall08.jpg", "file:///android_asset/wall09.jpg",
             "file:///android_asset/wall10.jpg", "file:///android_asset/wall11.jpg",
             "file:///android_asset/wall12.jpg"}; // 12个图片资源
 
-    private String names[] = {"郭富城", "刘德华", "张学友", "李连杰", "成龙", "谢霆锋", "李易峰",
+
+    private String names[] = {"郭富城",
+            "刘德华", "张学友", "李连杰", "成龙", "谢霆锋", "李易峰",
+            "刘德华", "张学友", "李连杰", "成龙", "谢霆锋", "李易峰",
+            "刘德华", "张学友", "李连杰", "成龙", "谢霆锋", "李易峰",
+            "刘德华", "张学友", "李连杰", "成龙", "谢霆锋", "李易峰",
+            "刘德华", "张学友", "李连杰", "成龙", "谢霆锋", "李易峰",
+            "刘德华", "张学友", "李连杰", "成龙", "谢霆锋", "李易峰",
+            "刘德华", "张学友", "李连杰", "成龙", "谢霆锋", "李易峰",
+            "刘德华", "张学友", "李连杰", "成龙", "谢霆锋", "李易峰",
             "霍建华", "胡歌", "曾志伟", "吴孟达", "梁朝伟"}; // 12个人名
 
     private List<CardDataItem> dataList = new ArrayList<>();
@@ -51,12 +75,13 @@ public class MainActivity extends FragmentActivity {
 
             @Override
             public void onShow(int index) {
-                Log.d("Card", "正在显示-" + dataList.get(index).userName);
+//                Log.d("Card", "正在显示-" + dataList.get(index).userName);
+                Log.d("Card", "正在显示-" + dataList.get(index % (dataList.size() -1)).userName);
             }
 
             @Override
             public void onCardVanish(int index, int type) {
-                Log.d("Card", "正在消失-" + dataList.get(index).userName + " 消失type=" + type);
+                Log.d("Card", "正在消失-" + dataList.get(index % (dataList.size() -1)).userName + " 消失type=" + type);
             }
         };
         slidePanel.setCardSwitchListener(cardSwitchListener);
@@ -71,7 +96,8 @@ public class MainActivity extends FragmentActivity {
 
             @Override
             public int getCount() {
-                return dataList.size();
+//                return dataList.size();
+                return dataList.size() == 0 ? 0 : Integer.MAX_VALUE;
             }
 
             @Override
@@ -85,12 +111,14 @@ public class MainActivity extends FragmentActivity {
                     view.setTag(viewHolder);
                 }
 
-                viewHolder.bindData(dataList.get(index));
+//                viewHolder.bindData(dataList.get(index));
+                viewHolder.bindData(dataList.get(index % (dataList.size() -1)));
             }
 
             @Override
             public Object getItem(int index) {
-                return dataList.get(index);
+//                return dataList.get(index);
+                return dataList.get(index % (dataList.size() -1));
             }
 
             @Override
@@ -128,7 +156,7 @@ public class MainActivity extends FragmentActivity {
     }
 
     private void prepareDataList() {
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < imagePaths.length; i++) {
             CardDataItem dataItem = new CardDataItem();
             dataItem.userName = names[i];
             dataItem.imagePath = imagePaths[i];
